@@ -1,9 +1,13 @@
 import org.json.simple.JSONObject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class WeatherAppGui extends JFrame {
     private JSONObject weatherData;
@@ -23,7 +27,7 @@ public class WeatherAppGui extends JFrame {
         // make our layout manager null to manually position our components within the gui
         setLayout(null);
 
-        setResizeable(false);
+        setResizable(false);
 
         addGuiComponents();
     }
@@ -139,5 +143,21 @@ public class WeatherAppGui extends JFrame {
             }
         });
         add(searchButton);
+    }
+
+    // used to create images in our gui components
+    private ImageIcon loadImage(String resourcePath){
+        try{
+            // read the image file from the path given
+            BufferedImage image = ImageIO.read(new File(resourcePath));
+
+            // returns an image icon so that our component can render it
+            return new ImageIcon(image);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        System.out.println("Could not find resource");
+        return null;
     }
 }
